@@ -3,6 +3,10 @@ from PIL import Image
 import numpy as np
 import random
 import time
+import webbrowser
+import easygui
+file_path = easygui.fileopenbox()
+myvar = easygui.enterbox("Ingrese en nivel de dificultad. (Desde 3 hasta N)")
 def cargarImagen(arr):
 	global pantalla, inicial
 	pantalla = []
@@ -36,7 +40,8 @@ def estadoInicial():
 			columna = 0
 			x = 0
 	pygame.display.flip()
-	pygame.image.save(ventana, 'estadoinicial.png')
+	#pygame.image.save(ventana, 'estadoinicial.png')
+	time.sleep(5)
 def putImages():
 	columna = 0
 	x = 0
@@ -66,7 +71,6 @@ def switchImages(pos):
 		else:
 			saltox = saltox + A
 			item = item + 1
-	print("POSICION:"+str(item))
 	swapantalla(item)
 def swapantalla(item):
 	aux1 = pantalla[item]
@@ -76,14 +80,12 @@ def swapantalla(item):
 	putImages()
 	compare()
 def compare():
-	pygame.image.save(ventana, 'estadofinal.png')
+	#pygame.image.save(ventana, 'estadofinal.png')
 	if(pantalla == init):
-		print('Terminó')
-	else:
-		print('Aún no!!!')
+		choice = easygui.ynbox('Ha Ganado!\n¿Desea reclamar su premio ahora?', 'Felicitaciones!', ('Sí', 'Sí'))
 pygame.init()
-N=3
-image = Image.open("s.jpg")
+N=int(myvar)
+image = Image.open(str(file_path))
 originalArray = np.asarray(image)
 originalIm = Image.fromarray(np.uint8(originalArray))
 widthIm,heightIm = image.size
@@ -96,12 +98,10 @@ for y in range(0,heightIm,H):
 	for x in range(0,widthIm,A):
 		fract = originalArray[y:y+H,x:x+A]
 		piezasad.append(fract)
-		
 numero = N ** 2
 piezas = piezasad[:numero]
 normal = piezas
 vacio = random.randint(0,(N**2)-1)
-print(len(piezas))
 cargarImagen(piezas)
 estadoInicial()
 init = list(pantalla)
@@ -115,5 +115,5 @@ while inicio:
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			if event.button == 1:
 				pos = pygame.mouse.get_pos()
-				switchImages(pos)	
+				switchImages(pos)
 pygame.quit()
