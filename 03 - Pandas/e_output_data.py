@@ -76,4 +76,5 @@ with sqlite3.connect("bdd_artist.bdd") as conexion:
     sub_df.to_sql('py_artistas', conexion)
 ######JSON######
 sub_df.to_json('artistas.json')
-sub_df.to_json('artistas_table.json', orient='table')    
+sub_df.to_json('artistas_table.json', orient='table')
+
