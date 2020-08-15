@@ -52,3 +52,35 @@ tercero = df.iloc[df.index == 1035]
 
 #Filtrando indices por rango de indice 0:4
 tercero = df.iloc[0:10, 0:4]
+
+##############
+datos = {
+    "nota 1":{"pepito":7,
+              "juanita":8,
+              "maria":9},
+    "nota 2":{"pepito":7,
+              "juanita":8,
+              "maria":9},
+    "disciplina":{"pepito":5,
+              "juanita":9,
+              "maria":2}
+    }
+
+notas = pd.DataFrame(datos)
+
+condicion_nota = notas['nota 1'] > 7
+condicion_disciplina = notas['disciplina'] > 7
+condicion_nota_2 = notas['nota 2'] > 7
+
+mayores_siete = notas.loc[condicion_nota, ["nota 1"]]
+
+pasaron = notas.loc[condicion_nota][condicion_disciplina][condicion_nota_2]
+
+notas.loc["maria","disciplina"] = 7
+notas.loc[:,"disciplina"] = 8
+
+#Promedio de las 3 notas
+prom = notas.loc[:,:] / 3
+not1 = (prom["nota 1"].sum() + prom["nota 2"].sum() + prom["disciplina"].sum()) / 3
+#Alt
+prom2 =(notas["nota 1"] + notas["nota 2"] + notas["disciplina"])
