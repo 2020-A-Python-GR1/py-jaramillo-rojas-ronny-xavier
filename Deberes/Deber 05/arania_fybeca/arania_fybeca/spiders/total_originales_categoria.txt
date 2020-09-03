@@ -1,24 +1,24 @@
-Perfumes y colonias 
-Más caro original:29.99
-Más barato original:7.34
-Suma Original: 300.12000000000006
 Lencería 
 Más caro original:89.0
 Más barato original:2.94
-Suma Original: 521.0699999999999
+Suma Original: 521.07
+Perfumes y colonias 
+Más caro original:29.99
+Más barato original:7.34
+Suma Original: 300.11999999999995
 Manicure y pedicure 
 Más caro original:22.99
 Más barato original:0.85
-Suma Original: 978.9400000000003
+Suma Original: 978.9400000000005
 Cabello 
 Más caro original:85.86
 Más barato original:0.43
-Suma Original: 6170.880000000001
+Suma Original: 6170.879999999981
 Cuidado de la piel 
 Más caro original:102.0
 Más barato original:1.73
-Suma Original: 20047.219999999972
+Suma Original: 20047.220000000045
 Maquillaje 
 Más caro original:150.64
 Más barato original:1.38
-Suma Original: 10434.759999999953
+Suma Original: 11074.710000000028

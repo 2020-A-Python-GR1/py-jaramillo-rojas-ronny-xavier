@@ -13,11 +13,11 @@ class AraniaCrawlFybeca(CrawlSpider):
     #Producto por sección -> pp=5000
     cats = ['446','627','489','537','558','562']
     allowed_domains = ['fybeca.com']
-    #urls_permitidos = []
+    urls_permitidos = []
     i_urls = []
     for item in cats:
-        #urls_permitidos.append('search-results.jsf\?cat='+item+'&s=0&pp=5000')
         i_urls.append('https://www.fybeca.com/FybecaWeb/pages/search-results.jsf?cat='+item+'&s=0&pp=5000')
+        urls_permitidos.append('search-results.jsf\?cat='+item+'&s=0&pp=5000')
     start_urls = i_urls
     #start_urls = ['https://www.fybeca.com/FybecaWeb/pages/search-results.jsf?cat=446&s=0&pp=25']
     #No se detectan las páginas con 5000 productos si se usa el LinExtractor(allow)
@@ -25,7 +25,7 @@ class AraniaCrawlFybeca(CrawlSpider):
         Rule(
             LinkExtractor(
                 allow_domains = allowed_domains,
-                #allow = urls_permitidos
+                allow = urls_permitidos
             ),
             callback = 'parse_page'
         ),

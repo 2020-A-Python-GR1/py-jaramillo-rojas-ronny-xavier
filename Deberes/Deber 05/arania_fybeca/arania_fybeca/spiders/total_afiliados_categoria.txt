@@ -1,24 +1,24 @@
-Perfumes y colonias 
-Más caro afiliado:29.99
-Más barato afiliado:7.27
-Suma afiliado: 298.39000000000004
 Lencería 
 Más caro afiliado:89.0
 Más barato afiliado:2.65
-Suma afiliado: 488.95
+Suma afiliado: 488.95000000000005
+Perfumes y colonias 
+Más caro afiliado:29.99
+Más barato afiliado:7.27
+Suma afiliado: 298.39
 Manicure y pedicure 
 Más caro afiliado:21.38
 Más barato afiliado:0.84
-Suma afiliado: 922.8
+Suma afiliado: 922.8000000000004
 Cabello 
 Más caro afiliado:78.13
 Más barato afiliado:0.39
-Suma afiliado: 5897.240000000004
+Suma afiliado: 5897.240000000008
 Cuidado de la piel 
 Más caro afiliado:99.96
 Más barato afiliado:1.64
-Suma afiliado: 18958.439999999984
+Suma afiliado: 18958.440000000006
 Maquillaje 
 Más caro afiliado:146.12
 Más barato afiliado:1.3
-Suma afiliado: 10096.749999999953
+Suma afiliado: 10717.52000000004
