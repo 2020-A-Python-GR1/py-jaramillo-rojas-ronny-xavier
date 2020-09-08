@@ -12,3 +12,22 @@ class AraniaFybeca(scrapy.Spider):
             yield scrapy.Request(url = url)
     def parse(self,response):
         productos = response.css('div.product-tile-inner')
+        for producto in productos:
+            detalles = producto.css('div.detail')
+            tiene_detalles = len(detalles)>0
+            if tiene_detalles:
+                #Instancia para cargar las propiedades del Item
+                producto_loader = ItemLoader(
+                    item = ProductoFybeca(), #Clas Item
+                    selector = producto #Selector por defecto
+                )
+                producto_loader.default_output_processor = TakeFirst()
+                producto_loader.add_css(
+                    'titulo', #Nombre de la propiedad del item
+                    'a.name::text' #CSS para obtener el dato
+                )
+                producto_loader.add_xpath(
+                    'imagen',
+                    'div[contains(@class,"detail")]/a[contains(@class,"image")]/img[contains(@id,"gImg")]/@src'
+                )
+                yield producto_loader.load_item()
