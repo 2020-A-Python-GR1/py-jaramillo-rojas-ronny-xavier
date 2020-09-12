@@ -7,12 +7,20 @@ class ModSpider(CrawlSpider):
     start_urls = [
         'https://repelis24.co/'
         #'https://repelis24.co/pelicula/joker-online-gratis-w9qxkc/'
+        #'https://repelis24.co/pelicula/la-vieja-guardia-2020-online-descargar/'
+        #'https://repelis24.co/pelicula/lilo-y-stitch-online/'
+        #'https://repelis24.co/pelicula/la-felicidad-de-los-perros-2018-online-descargar/'
+        #'https://repelis24.co/pelicula/aversion-2019-online-descargar/'
     ]
-    for i  in range(1,2): #124 páginas
+    for i  in range(1,124): #124 páginas
         start_urls.append('https://repelis24.co/pelicula/page/{i}/'.format(i=i))
     segmentos_url_permitidos = (
         'pelicula\/.*'
+        #'lilo'
+        #'vieja'
         #'joker'
+        #'felicidad'
+        #'aversion'
     )
     allowed_domains = [
         'repelis24.co'
@@ -41,26 +49,71 @@ class ModSpider(CrawlSpider):
         info = response.css('div.sbox > div.custom_fields > span.valor').extract()
         main_info = response.css('div.content > div.sheader > div.data > div.extra')
         movie_name = info[0].split('>')[1].split('<')[0]
+        if('&amp;' in movie_name):
+            movie_name = movie_name.replace('&amp;','&')
         self.movie_name.append(movie_name)
-        imdb_rating = info[1].split('<strong>')[1].split('</strong>')[0]
-        self.imdb_rating.append(imdb_rating)
-        imdb_votes = info[1].split('</strong>')[1].split('votos')[0].strip()
-        self.imdb_votes.append(imdb_votes)
-        tmdb_rating = info[2].split('<strong>')[1].split('</strong>')[0]
-        self.tmdb_rating.append(tmdb_rating)
-        tmdb_votes = info[2].split('</strong>')[1].split('votos')[0].strip()
-        self.tmdb_votes.append(tmdb_votes)
-        release_date = main_info.css('span.date::text').extract()
-        self.release_date.append(release_date)
-        country = main_info.css('span.country::text').extract()
-        self.country.append(country)
-        runtime = main_info.css('span.runtime::text').extract()
-        self.runtime.append(runtime)
-        rating = main_info.css('span.rated::text').extract()
-        self.rating.append(rating)
-        genre = response.css('div.sgeneros > a::text').extract()[0]
-        self.genre.append(genre)
-        #Existen páginas que no tienen imdb_rating o tmdb_rating, revisar.
+        if(len(info)==3):
+            imdb_rating = info[1].split('<strong>')[1].split('</strong>')[0]
+            self.imdb_rating.append(imdb_rating)
+            imdb_votes = info[1].split('</strong>')[1].split('votos')[0].strip()
+            self.imdb_votes.append(imdb_votes)
+            tmdb_rating = info[2].split('<strong>')[1].split('</strong>')[0]
+            self.tmdb_rating.append(tmdb_rating)
+            tmdb_votes = info[2].split('</strong>')[1].split('votos')[0].strip()
+            if('</span>' in tmdb_votes):
+                self.tmdb_votes.append("")
+            else:
+                self.tmdb_votes.append(tmdb_votes)
+        elif(len(info)==2):
+            if("repimdb" in info[1]):
+                imdb_rating = info[1].split('<strong>')[1].split('</strong>')[0]
+                self.imdb_rating.append(imdb_rating)
+                imdb_votes = info[1].split('</strong>')[1].split('votos')[0].strip()
+                self.imdb_votes.append(imdb_votes)
+                self.tmdb_rating.append("")
+                self.tmdb_votes.append("") 
+            else:
+                tmdb_rating = info[1].split('<strong>')[1].split('</strong>')[0]
+                self.tmdb_rating.append(tmdb_rating)
+                tmdb_votes = info[1].split('</strong>')[1].split('votos')[0].strip()
+                if('</span>' in tmdb_votes):
+                    self.tmdb_votes.append("")
+                else:
+                    self.tmdb_votes.append(tmdb_votes)
+                self.imdb_rating.append("")
+                self.imdb_votes.append("")
+        else:
+            self.tmdb_rating.append("")
+            self.tmdb_votes.append("")
+            self.imdb_rating.append("")
+            self.imdb_votes.append("")
+
+        if(main_info.css('span.date::text').extract()):
+            release_date = main_info.css('span.date::text').extract()[0]
+            self.release_date.append(release_date)
+        else:
+            self.release_date.append("")
+        if(main_info.css('span.country::text').extract()):
+            country = main_info.css('span.country::text').extract()[0]
+            self.country.append(country)
+        else:
+            self.country.append("")
+        if(main_info.css('span.runtime::text').extract()):
+            runtime = main_info.css('span.runtime::text').extract()[0]
+            self.runtime.append(runtime)
+        else:
+            self.runtime.append("")
+        if(main_info.css('span.rated::text').extract()):
+            rating = main_info.css('span.rated::text').extract()[0]
+            self.rating.append(rating)
+        else:
+            self.rating.append("")
+        if(response.css('div.sgeneros > a::text').extract()):
+            genre = response.css('div.sgeneros > a::text').extract()[0]
+            self.genre.append(genre)
+        else:
+            self.genre.append("")
+
     def closed( self, reason ):
         save_path = './movies.csv'
         df = pd.DataFrame(
@@ -69,7 +122,7 @@ class ModSpider(CrawlSpider):
                 'release_date': pd.Series(self.release_date),
                 'country': pd.Series(self.country),
                 'runtime': pd.Series(self.runtime),
-                'rating': pd.Series(self.runtime),
+                'rating': pd.Series(self.rating),
                 'genre': pd.Series(self.genre),
                 'imdb_rating': pd.Series(self.imdb_rating),
                 'imdb_votes': pd.Series(self.imdb_votes),
@@ -78,4 +131,3 @@ class ModSpider(CrawlSpider):
             }
         )
         df.to_csv(save_path,index=False)
-
