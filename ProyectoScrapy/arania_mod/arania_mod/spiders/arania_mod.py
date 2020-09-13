@@ -6,21 +6,11 @@ class ModSpider(CrawlSpider):
     name = 'arania_mod'
     start_urls = [
         'https://repelis24.co/'
-        #'https://repelis24.co/pelicula/joker-online-gratis-w9qxkc/'
-        #'https://repelis24.co/pelicula/la-vieja-guardia-2020-online-descargar/'
-        #'https://repelis24.co/pelicula/lilo-y-stitch-online/'
-        #'https://repelis24.co/pelicula/la-felicidad-de-los-perros-2018-online-descargar/'
-        #'https://repelis24.co/pelicula/aversion-2019-online-descargar/'
     ]
     for i  in range(1,124): #124 páginas
         start_urls.append('https://repelis24.co/pelicula/page/{i}/'.format(i=i))
     segmentos_url_permitidos = (
         'pelicula\/.*'
-        #'lilo'
-        #'vieja'
-        #'joker'
-        #'felicidad'
-        #'aversion'
     )
     allowed_domains = [
         'repelis24.co'
